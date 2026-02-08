@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ACT Security PR - Configurador Inteligente</title>
+    <title>ACT Security PR - Configurador de Sistemas</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -350,55 +350,104 @@
             font-size: 0.95rem;
         }
 
-        /* Checkbox Groups */
-        .checkbox-group {
+        /* Counter */
+        .counter-group {
             display: grid;
-            gap: 1rem;
+            gap: 1.5rem;
             margin: 2rem 0;
         }
 
-        .checkbox-item {
+        .counter-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background: var(--surface);
+        }
+
+        .counter-label {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .counter-points {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 0.25rem;
+        }
+
+        .counter-controls {
             display: flex;
             align-items: center;
             gap: 1rem;
-            padding: 1rem;
-            border: 2px solid var(--border);
+        }
+
+        .counter-btn {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--accent);
+            background: white;
+            color: var(--accent);
             border-radius: 8px;
+            font-size: 1.5rem;
             cursor: pointer;
             transition: all 0.3s;
-        }
-
-        .checkbox-item:hover {
-            border-color: var(--accent);
-            background: rgba(220, 38, 38, 0.02);
-        }
-
-        .checkbox-item.checked {
-            border-color: var(--accent);
-            background: rgba(220, 38, 38, 0.05);
-        }
-
-        .checkbox-icon {
-            width: 24px;
-            height: 24px;
-            border: 2px solid var(--border);
-            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
-            transition: all 0.3s;
         }
 
-        .checkbox-item.checked .checkbox-icon {
+        .counter-btn:hover:not(:disabled) {
             background: var(--accent);
-            border-color: var(--accent);
+            color: white;
         }
 
-        .checkbox-item.checked .checkbox-icon::after {
-            content: '✓';
+        .counter-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .counter-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            min-width: 40px;
+            text-align: center;
+        }
+
+        /* Points Summary */
+        .points-summary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             color: white;
-            font-weight: bold;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+
+        .points-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+        }
+
+        .points-total {
+            border-top: 2px solid rgba(255,255,255,0.3);
+            margin-top: 0.5rem;
+            padding-top: 0.75rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .points-warning {
+            background: rgba(251, 133, 0, 0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
 
         /* Radio Groups */
@@ -449,56 +498,6 @@
             height: 10px;
             background: var(--accent);
             border-radius: 50%;
-        }
-
-        /* Counter */
-        .counter-group {
-            display: grid;
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .counter-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-        }
-
-        .counter-controls {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .counter-btn {
-            width: 40px;
-            height: 40px;
-            border: 2px solid var(--accent);
-            background: white;
-            color: var(--accent);
-            border-radius: 8px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .counter-btn:hover {
-            background: var(--accent);
-            color: white;
-        }
-
-        .counter-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            min-width: 60px;
-            text-align: center;
         }
 
         /* Form Elements */
@@ -644,6 +643,12 @@
             margin: 1.5rem 0;
         }
 
+        .price-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
         .price-amount {
             font-size: 2.5rem;
             font-weight: 800;
@@ -653,6 +658,21 @@
         .price-period {
             font-size: 0.9rem;
             opacity: 0.9;
+            margin-top: 0.5rem;
+        }
+
+        .price-breakdown {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .price-breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
         }
 
         .package-features {
@@ -703,7 +723,7 @@
             border-radius: 8px;
             margin: 1rem 0;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 0.75rem;
         }
 
@@ -713,8 +733,48 @@
             color: #92400e;
         }
 
+        .alert-info {
+            background: rgba(59, 130, 246, 0.1);
+            border: 2px solid #3b82f6;
+            color: #1e40af;
+        }
+
         .alert-icon {
             font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        /* Success Message */
+        .success-message {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .success-icon {
+            font-size: 5rem;
+            color: var(--success);
+            margin-bottom: 1rem;
+            animation: scaleIn 0.5s ease;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .success-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .success-text {
+            color: var(--text-light);
+            font-size: 1.1rem;
         }
 
         /* Footer */
@@ -756,39 +816,6 @@
             opacity: 0.8;
         }
 
-        /* Success Message */
-        .success-message {
-            text-align: center;
-            padding: 3rem;
-        }
-
-        .success-icon {
-            font-size: 5rem;
-            color: var(--success);
-            margin-bottom: 1rem;
-            animation: scaleIn 0.5s ease;
-        }
-
-        @keyframes scaleIn {
-            from {
-                transform: scale(0);
-            }
-            to {
-                transform: scale(1);
-            }
-        }
-
-        .success-title {
-            font-size: 2rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .success-text {
-            color: var(--text-light);
-            font-size: 1.1rem;
-        }
-
         /* Responsive */
         @media (max-width: 768px) {
             .hero h1 {
@@ -824,6 +851,10 @@
                 height: 35px;
                 font-size: 0.8rem;
             }
+
+            .price-amount {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
@@ -847,8 +878,8 @@
     <section class="hero" id="heroSection">
         <div class="container">
             <div class="hero-content">
-                <h1>Encuentra tu Sistema de Seguridad Ideal</h1>
-                <p>Responde unas simples preguntas y te recomendaremos el paquete perfecto para tu propiedad. Sin compromiso.</p>
+                <h1>Tu Sistema de Seguridad Ideal</h1>
+                <p>Responde unas simples preguntas y obtén tu cotización personalizada al instante. Ofertas especiales disponibles.</p>
                 <button class="cta-button" onclick="startConfigurator()">Comenzar Ahora</button>
             </div>
         </div>
@@ -860,35 +891,23 @@
             <div class="progress-bar" id="progressBar">
                 <div class="progress-step active" data-step="1">
                     <div class="step-circle">1</div>
-                    <div class="step-label">Propiedad</div>
+                    <div class="step-label">Tipo</div>
                 </div>
                 <div class="progress-step" data-step="2">
                     <div class="step-circle">2</div>
-                    <div class="step-label">Proyecto</div>
+                    <div class="step-label">Sistema</div>
                 </div>
                 <div class="progress-step" data-step="3">
                     <div class="step-circle">3</div>
-                    <div class="step-label">Estructura</div>
+                    <div class="step-label">Detalles</div>
                 </div>
                 <div class="progress-step" data-step="4">
                     <div class="step-circle">4</div>
-                    <div class="step-label">Alarmas</div>
+                    <div class="step-label">Contacto</div>
                 </div>
                 <div class="progress-step" data-step="5">
                     <div class="step-circle">5</div>
-                    <div class="step-label">Cámaras</div>
-                </div>
-                <div class="progress-step" data-step="6">
-                    <div class="step-circle">6</div>
-                    <div class="step-label">Conectividad</div>
-                </div>
-                <div class="progress-step" data-step="7">
-                    <div class="step-circle">7</div>
-                    <div class="step-label">Contacto</div>
-                </div>
-                <div class="progress-step" data-step="8">
-                    <div class="step-circle">8</div>
-                    <div class="step-label">Paquete</div>
+                    <div class="step-label">Cotización</div>
                 </div>
             </div>
         </div>
@@ -900,7 +919,7 @@
             <!-- Step 1: Property Type -->
             <div class="step-content active" id="step1">
                 <h2 class="step-title">¿Qué tipo de propiedad deseas proteger?</h2>
-                <p class="step-subtitle">Esto nos ayudará a personalizar las recomendaciones</p>
+                <p class="step-subtitle">Esto nos ayudará a ofrecerte las mejores opciones</p>
                 
                 <div class="selection-grid">
                     <div class="selection-card" onclick="selectPropertyType('residential')">
@@ -913,11 +932,6 @@
                         <h3 class="card-title">Comercial</h3>
                         <p class="card-description">Oficina, tienda, local comercial</p>
                     </div>
-                    <div class="selection-card" onclick="selectPropertyType('industrial')">
-                        <div class="card-icon">🏭</div>
-                        <h3 class="card-title">Industrial / Multi-unidad</h3>
-                        <p class="card-description">Almacén, fábrica, edificio completo</p>
-                    </div>
                 </div>
 
                 <div class="button-group">
@@ -926,43 +940,26 @@
                 </div>
             </div>
 
-            <!-- Step 2: Project Type (Residential Only) -->
+            <!-- Step 2: System Type -->
             <div class="step-content" id="step2">
-                <h2 class="step-title">¿Qué necesitas hoy?</h2>
-                <p class="step-subtitle">Cuéntanos sobre tu proyecto</p>
+                <h2 class="step-title">¿Qué tipo de sistema necesitas?</h2>
+                <p class="step-subtitle">Selecciona la opción que mejor se ajuste a tus necesidades</p>
                 
-                <div class="radio-group">
-                    <div class="radio-item" onclick="selectProjectType('new')">
-                        <div class="radio-icon"></div>
-                        <div>
-                            <h3 class="card-title">🆕 Sistema Nuevo</h3>
-                            <p class="card-description">Instalación completa desde cero</p>
-                        </div>
+                <div class="selection-grid">
+                    <div class="selection-card" onclick="selectSystemType('cameras-only')">
+                        <div class="card-icon">📹</div>
+                        <h3 class="card-title">Solo Cámaras VeoSmart</h3>
+                        <p class="card-description">Sistema de cámaras IP sin contrato. Compra tu equipo y listo.</p>
                     </div>
-                    <div class="radio-item" onclick="selectProjectType('upgrade')">
-                        <div class="radio-icon"></div>
-                        <div>
-                            <h3 class="card-title">⬆️ Mejorar / Ampliar Sistema Existente</h3>
-                            <p class="card-description">Upgrade de tu sistema actual</p>
-                        </div>
+                    <div class="selection-card" onclick="selectSystemType('alarm-only')">
+                        <div class="card-icon">🔐</div>
+                        <h3 class="card-title">Solo Sistema de Alarma</h3>
+                        <p class="card-description">Protección con sensores y monitoreo profesional</p>
                     </div>
-                </div>
-
-                <div id="upgradeOptions" style="display: none; margin-top: 2rem;">
-                    <p style="font-weight: 600; margin-bottom: 1rem;">¿Qué deseas mejorar?</p>
-                    <div class="checkbox-group">
-                        <div class="checkbox-item" onclick="toggleUpgrade('alarm')">
-                            <div class="checkbox-icon"></div>
-                            <div>Alarma</div>
-                        </div>
-                        <div class="checkbox-item" onclick="toggleUpgrade('cameras')">
-                            <div class="checkbox-icon"></div>
-                            <div>Cámaras</div>
-                        </div>
-                        <div class="checkbox-item" onclick="toggleUpgrade('both')">
-                            <div class="checkbox-icon"></div>
-                            <div>Ambos</div>
-                        </div>
+                    <div class="selection-card" onclick="selectSystemType('alarm-cameras')">
+                        <div class="card-icon">🛡️</div>
+                        <h3 class="card-title">Alarma + Cámaras</h3>
+                        <p class="card-description">Protección completa con monitoreo 24/7</p>
                     </div>
                 </div>
 
@@ -972,247 +969,17 @@
                 </div>
             </div>
 
-            <!-- Step 3: Structure -->
+            <!-- Step 3: Details (Dynamic based on system type) -->
             <div class="step-content" id="step3">
-                <h2 class="step-title">Estructura de la Propiedad</h2>
-                <p class="step-subtitle">Ayúdanos a entender mejor tu espacio</p>
-                
-                <div style="margin-bottom: 2rem;">
-                    <p style="font-weight: 600; margin-bottom: 1rem;">¿Cuántos niveles tiene la residencia?</p>
-                    <div class="radio-group">
-                        <div class="radio-item" onclick="selectLevels('1')">
-                            <div class="radio-icon"></div>
-                            <div>1 nivel</div>
-                        </div>
-                        <div class="radio-item" onclick="selectLevels('2')">
-                            <div class="radio-icon"></div>
-                            <div>2 niveles</div>
-                        </div>
-                        <div class="radio-item" onclick="selectLevels('3+')">
-                            <div class="radio-icon"></div>
-                            <div>3 o más niveles</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <p style="font-weight: 600; margin-bottom: 1rem;">¿Cuántas puertas de acceso tiene la propiedad?</p>
-                    <div class="radio-group">
-                        <div class="radio-item" onclick="selectDoors('1')">
-                            <div class="radio-icon"></div>
-                            <div>🚪 1 puerta</div>
-                        </div>
-                        <div class="radio-item" onclick="selectDoors('2')">
-                            <div class="radio-icon"></div>
-                            <div>🚪🚪 2 puertas</div>
-                        </div>
-                        <div class="radio-item" onclick="selectDoors('3')">
-                            <div class="radio-icon"></div>
-                            <div>🚪🚪🚪 3 puertas</div>
-                        </div>
-                        <div class="radio-item" onclick="selectDoors('4+')">
-                            <div class="radio-icon"></div>
-                            <div>🚪🚪🚪🚪 4 o más puertas</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="button-group">
-                    <button class="btn btn-secondary" onclick="prevStep(3)">Anterior</button>
-                    <button class="btn btn-primary" id="nextStep3" onclick="nextStep(3)" disabled>Continuar</button>
+                <div id="step3Content">
+                    <!-- Content will be generated dynamically -->
                 </div>
             </div>
 
-            <!-- Step 4: Alarms -->
+            <!-- Step 4: Contact Info -->
             <div class="step-content" id="step4">
-                <h2 class="step-title">🔐 Sistema de Alarmas</h2>
-                <p class="step-subtitle">Selecciona las áreas que deseas proteger</p>
-                
-                <div style="margin-bottom: 2rem;">
-                    <p style="font-weight: 600; margin-bottom: 1rem;">¿Qué áreas deseas proteger? (Puedes seleccionar varias)</p>
-                    <div class="checkbox-group" id="alarmAreas">
-                        <div class="checkbox-item" onclick="toggleAlarmArea('mainDoors')">
-                            <div class="checkbox-icon"></div>
-                            <div>Puertas principales</div>
-                        </div>
-                        <div class="checkbox-item" onclick="toggleAlarmArea('windows')">
-                            <div class="checkbox-icon"></div>
-                            <div>Ventanas accesibles</div>
-                        </div>
-                        <div class="checkbox-item" onclick="toggleAlarmArea('interior')">
-                            <div class="checkbox-icon"></div>
-                            <div>Áreas interiores (sensores de movimiento)</div>
-                        </div>
-                        <div class="checkbox-item" onclick="toggleAlarmArea('garage')">
-                            <div class="checkbox-icon"></div>
-                            <div>Garaje</div>
-                        </div>
-                        <div class="checkbox-item" onclick="toggleAlarmArea('exterior')">
-                            <div class="checkbox-icon"></div>
-                            <div>Patio / áreas exteriores</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <p style="font-weight: 600; margin-bottom: 1rem;">¿Deseas monitoreo profesional 24/7?</p>
-                    <div class="radio-group">
-                        <div class="radio-item" onclick="selectMonitoring('yes')">
-                            <div class="radio-icon"></div>
-                            <div>
-                                <strong>Sí</strong> - Monitoreo profesional con respuesta de emergencia
-                            </div>
-                        </div>
-                        <div class="radio-item" onclick="selectMonitoring('no')">
-                            <div class="radio-icon"></div>
-                            <div>
-                                <strong>No</strong> - Solo notificaciones locales en mi celular
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="button-group">
-                    <button class="btn btn-secondary" onclick="prevStep(4)">Anterior</button>
-                    <button class="btn btn-primary" id="nextStep4" onclick="nextStep(4)" disabled>Continuar</button>
-                </div>
-            </div>
-
-            <!-- Step 5: Cameras -->
-            <div class="step-content" id="step5">
-                <h2 class="step-title">📷 Sistema de Cámaras</h2>
-                <p class="step-subtitle">Personaliza tu sistema de video vigilancia</p>
-                
-                <div style="margin-bottom: 2rem;">
-                    <p style="font-weight: 600; margin-bottom: 1rem;">Cantidad de cámaras deseadas</p>
-                    <div class="radio-group">
-                        <div class="radio-item" onclick="selectCameraCount('4')">
-                            <div class="radio-icon"></div>
-                            <div>📹 4 cámaras</div>
-                        </div>
-                        <div class="radio-item" onclick="selectCameraCount('8')">
-                            <div class="radio-icon"></div>
-                            <div>📹📹 8 cámaras</div>
-                        </div>
-                        <div class="radio-item" onclick="selectCameraCount('16')">
-                            <div class="radio-icon"></div>
-                            <div>📹📹📹 16 cámaras</div>
-                        </div>
-                        <div class="radio-item" onclick="selectCameraCount('17+')">
-                            <div class="radio-icon"></div>
-                            <div>📹📹📹+ 17 o más cámaras (Solución personalizada)</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 2rem;">
-                    <p style="font-weight: 600; margin-bottom: 1rem;">Ubicación de las cámaras</p>
-                    <div class="checkbox-group">
-                        <div class="checkbox-item" onclick="toggleCameraLocation('exterior')">
-                            <div class="checkbox-icon"></div>
-                            <div>Solo exteriores</div>
-                        </div>
-                        <div class="checkbox-item" onclick="toggleCameraLocation('interior')">
-                            <div class="checkbox-icon"></div>
-                            <div>Solo interiores</div>
-                        </div>
-                        <div class="checkbox-item" onclick="toggleCameraLocation('both')">
-                            <div class="checkbox-icon"></div>
-                            <div>Interiores + Exteriores</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <p style="font-weight: 600; margin-bottom: 1rem;">Funciones deseadas (Puedes seleccionar varias)</p>
-                    <div class="checkbox-group">
-                        <div class="checkbox-item" onclick="toggleCameraFeature('audio')">
-                            <div class="checkbox-icon"></div>
-                            <div>🔊 Audio de dos vías</div>
-                        </div>
-                        <div class="checkbox-item" onclick="toggleCameraFeature('nightVision')">
-                            <div class="checkbox-icon"></div>
-                            <div>🌙 Visión nocturna full color</div>
-                        </div>
-                        <div class="checkbox-item" onclick="toggleCameraFeature('remote')">
-                            <div class="checkbox-icon"></div>
-                            <div>📱 Acceso remoto desde app</div>
-                        </div>
-                        <div class="checkbox-item" onclick="toggleCameraFeature('eventRecording')">
-                            <div class="checkbox-icon"></div>
-                            <div>⚡ Grabación por eventos</div>
-                        </div>
-                        <div class="checkbox-item" onclick="toggleCameraFeature('continuous')">
-                            <div class="checkbox-icon"></div>
-                            <div>🔄 Grabación continua 24/7</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="button-group">
-                    <button class="btn btn-secondary" onclick="prevStep(5)">Anterior</button>
-                    <button class="btn btn-primary" id="nextStep5" onclick="nextStep(5)" disabled>Continuar</button>
-                </div>
-            </div>
-
-            <!-- Step 6: Connectivity -->
-            <div class="step-content" id="step6">
-                <h2 class="step-title">🌐 Conectividad y Uso</h2>
-                <p class="step-subtitle">Últimas preguntas técnicas</p>
-                
-                <div style="margin-bottom: 2rem;">
-                    <p style="font-weight: 600; margin-bottom: 1rem;">¿Cómo deseas monitorear tu sistema?</p>
-                    <div class="checkbox-group">
-                        <div class="checkbox-item" onclick="toggleMonitorDevice('mobile')">
-                            <div class="checkbox-icon"></div>
-                            <div>📱 Celular</div>
-                        </div>
-                        <div class="checkbox-item" onclick="toggleMonitorDevice('computer')">
-                            <div class="checkbox-icon"></div>
-                            <div>💻 Computadora</div>
-                        </div>
-                        <div class="checkbox-item" onclick="toggleMonitorDevice('monitor')">
-                            <div class="checkbox-icon"></div>
-                            <div>📺 Monitor dedicado</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <p style="font-weight: 600; margin-bottom: 1rem;">¿Tu propiedad tiene internet estable?</p>
-                    <div class="radio-group">
-                        <div class="radio-item" onclick="selectInternet('yes')">
-                            <div class="radio-icon"></div>
-                            <div>✅ Sí</div>
-                        </div>
-                        <div class="radio-item" onclick="selectInternet('no')">
-                            <div class="radio-icon"></div>
-                            <div>❌ No</div>
-                        </div>
-                        <div class="radio-item" onclick="selectInternet('unsure')">
-                            <div class="radio-icon"></div>
-                            <div>❓ No estoy seguro</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="noInternetWarning" style="display: none;" class="alert-box alert-warning">
-                    <span class="alert-icon">⚠️</span>
-                    <div>
-                        <strong>Nota importante:</strong> Sin conexión a internet, algunas funciones como el acceso remoto y las notificaciones en tiempo real no estarán disponibles. Te recomendaremos opciones que funcionen con grabación local.
-                    </div>
-                </div>
-
-                <div class="button-group">
-                    <button class="btn btn-secondary" onclick="prevStep(6)">Anterior</button>
-                    <button class="btn btn-primary" id="nextStep6" onclick="nextStep(6)" disabled>Continuar</button>
-                </div>
-            </div>
-
-            <!-- Step 7: Contact Info -->
-            <div class="step-content" id="step7">
                 <h2 class="step-title">Información de Contacto</h2>
-                <p class="step-subtitle">Para enviarte tu paquete personalizado y cotización</p>
+                <p class="step-subtitle">Para enviarte tu cotización personalizada</p>
                 
                 <form id="contactForm">
                     <div class="form-row">
@@ -1249,20 +1016,20 @@
 
                     <div class="form-group">
                         <label class="form-label">Comentarios adicionales</label>
-                        <textarea class="form-input" id="comments" placeholder="Cuéntanos cualquier detalle adicional..."></textarea>
+                        <textarea class="form-input" id="comments" placeholder="Cuéntanos más sobre tus necesidades..."></textarea>
                     </div>
                 </form>
 
                 <div class="button-group">
-                    <button class="btn btn-secondary" onclick="prevStep(7)">Anterior</button>
-                    <button class="btn btn-primary" onclick="nextStep(7)">Ver Mi Paquete Recomendado</button>
+                    <button class="btn btn-secondary" onclick="prevStep(4)">Anterior</button>
+                    <button class="btn btn-primary" onclick="nextStep(4)">Ver Mi Cotización</button>
                 </div>
             </div>
 
-            <!-- Step 8: Package Recommendation -->
-            <div class="step-content" id="step8">
-                <div id="packageRecommendation">
-                    <!-- Packages will be generated dynamically -->
+            <!-- Step 5: Quote -->
+            <div class="step-content" id="step5">
+                <div id="quoteContent">
+                    <!-- Quote will be generated dynamically -->
                 </div>
             </div>
 
@@ -1271,8 +1038,8 @@
                 <div class="success-message">
                     <div class="success-icon">✅</div>
                     <h2 class="success-title">¡Solicitud Enviada!</h2>
-                    <p class="success-text">Gracias por confiar en ACT Security PR. Nuestro equipo de expertos revisará tu configuración y te contactará en las próximas 24 horas con una cotización detallada y personalizada.</p>
-                    <p class="success-text" style="margin-top: 1rem;">Revisa tu email para ver el resumen de tu paquete recomendado.</p>
+                    <p class="success-text">Gracias por confiar en ACT Security PR. Nuestro equipo te contactará en las próximas 24 horas para confirmar tu cotización y coordinar la instalación.</p>
+                    <p class="success-text" style="margin-top: 1rem;">Revisa tu email para ver el resumen completo de tu cotización.</p>
                     <button class="btn btn-primary" onclick="location.reload()" style="margin-top: 2rem;">Hacer Otra Configuración</button>
                 </div>
             </div>
@@ -1313,21 +1080,38 @@
         // Configuration State
         const config = {
             propertyType: null,
-            projectType: null,
-            upgradeItems: [],
-            levels: null,
-            doors: null,
-            alarmAreas: [],
-            monitoring: null,
+            systemType: null,
             cameraCount: null,
-            cameraLocations: [],
-            cameraFeatures: [],
-            monitorDevices: [],
-            internet: null,
+            cameraPayment: null,
+            alarmContract: null,
+            equipmentCounts: {
+                doors: 0,
+                windows: 0,
+                motionSensors: 0,
+                keyfobs: 0,
+                smokeCO: 0,
+                siren: 0,
+                remoteControl: 0
+            },
+            alarmCameras: null,
             contact: {},
-            currentStep: 1,
-            recommendedPackage: null
+            currentStep: 1
         };
+
+        // Point values
+        const POINT_VALUES = {
+            doors: 1,
+            windows: 2,
+            motionSensors: 2,
+            keyfobs: 1,
+            smokeCO: 3,
+            siren: 5,
+            remoteControl: 1
+        };
+
+        const INCLUDED_POINTS = 5;
+        const EXTRA_POINT_COST = 75;
+        const TECH_VISIT_THRESHOLD = 20;
 
         // Start Configurator
         function startConfigurator() {
@@ -1356,382 +1140,763 @@
             document.getElementById('nextStep1').disabled = false;
         }
 
-        // Step 2: Project Type
-        function selectProjectType(type) {
-            config.projectType = type;
-            document.querySelectorAll('#step2 .radio-item').forEach(item => {
-                item.classList.remove('selected');
+        // Step 2: System Type
+        function selectSystemType(type) {
+            config.systemType = type;
+            document.querySelectorAll('#step2 .selection-card').forEach(card => {
+                card.classList.remove('selected');
             });
-            event.target.closest('.radio-item').classList.add('selected');
-            
-            if (type === 'upgrade') {
-                document.getElementById('upgradeOptions').style.display = 'block';
-                document.getElementById('nextStep2').disabled = true;
-            } else {
-                document.getElementById('upgradeOptions').style.display = 'none';
-                document.getElementById('nextStep2').disabled = false;
+            event.target.closest('.selection-card').classList.add('selected');
+            document.getElementById('nextStep2').disabled = false;
+        }
+
+        // Calculate Total Points
+        function calculateTotalPoints() {
+            let total = 0;
+            for (let key in config.equipmentCounts) {
+                total += config.equipmentCounts[key] * POINT_VALUES[key];
+            }
+            return total;
+        }
+
+        // Update Points Summary
+        function updatePointsSummary() {
+            const totalPoints = calculateTotalPoints();
+            const extraPoints = Math.max(0, totalPoints - INCLUDED_POINTS);
+            const extraCost = extraPoints * EXTRA_POINT_COST;
+
+            const summaryHTML = `
+                <div class="points-summary">
+                    <h3 style="margin-bottom: 1rem;">Resumen de Puntos</h3>
+                    ${Object.keys(config.equipmentCounts).map(key => {
+                        const count = config.equipmentCounts[key];
+                        const points = count * POINT_VALUES[key];
+                        if (count === 0) return '';
+                        const labels = {
+                            doors: 'Puertas',
+                            windows: 'Ventanas (Shock Sensors)',
+                            motionSensors: 'Sensores de Movimiento',
+                            keyfobs: 'Keyfobs/Llaveros',
+                            smokeCO: 'Sensores Humo/CO',
+                            siren: 'Sirena Adicional',
+                            remoteControl: 'Control Remoto'
+                        };
+                        return `
+                            <div class="points-row">
+                                <span>${labels[key]} (${count})</span>
+                                <span>${points} pts</span>
+                            </div>
+                        `;
+                    }).join('')}
+                    <div class="points-total points-row">
+                        <span>Total de Puntos</span>
+                        <span>${totalPoints} pts</span>
+                    </div>
+                    <div class="points-row" style="opacity: 0.8; font-size: 0.9rem;">
+                        <span>Puntos incluidos</span>
+                        <span>${INCLUDED_POINTS} pts</span>
+                    </div>
+                    ${extraPoints > 0 ? `
+                        <div class="points-row" style="color: var(--accent); font-weight: 700;">
+                            <span>Puntos adicionales</span>
+                            <span>${extraPoints} pts × $${EXTRA_POINT_COST} = $${extraCost}</span>
+                        </div>
+                    ` : ''}
+                    ${totalPoints >= TECH_VISIT_THRESHOLD ? `
+                        <div class="points-warning">
+                            <span>⚠️</span>
+                            <div>
+                                <strong>Recomendación:</strong> Tu sistema requiere más de ${TECH_VISIT_THRESHOLD} puntos. 
+                                Te recomendamos una visita técnica para diseñar la mejor solución.
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+
+            const summaryContainer = document.getElementById('pointsSummary');
+            if (summaryContainer) {
+                summaryContainer.innerHTML = summaryHTML;
             }
         }
 
-        function toggleUpgrade(item) {
-            const element = event.target.closest('.checkbox-item');
-            element.classList.toggle('checked');
+        // Counter Functions
+        function updateCounter(item, change) {
+            config.equipmentCounts[item] = Math.max(0, config.equipmentCounts[item] + change);
+            document.getElementById(`count-${item}`).textContent = config.equipmentCounts[item];
             
-            const index = config.upgradeItems.indexOf(item);
-            if (index > -1) {
-                config.upgradeItems.splice(index, 1);
-            } else {
-                config.upgradeItems.push(item);
+            // Update minus button state
+            const minusBtn = event.target.closest('.counter-item').querySelector('.counter-btn:first-child');
+            minusBtn.disabled = config.equipmentCounts[item] === 0;
+            
+            updatePointsSummary();
+        }
+
+        // Generate Step 3 Content
+        function generateStep3Content() {
+            const type = config.systemType;
+            let html = '';
+
+            if (type === 'cameras-only') {
+                html = `
+                    <h2 class="step-title">Configuración de Cámaras VeoSmart</h2>
+                    <p class="step-subtitle">Sistema sin contrato - Compra tu equipo</p>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <p style="font-weight: 600; margin-bottom: 1rem;">¿Cuántas cámaras necesitas?</p>
+                        <div class="radio-group">
+                            <div class="radio-item" onclick="selectCameraCount('4')">
+                                <div class="radio-icon"></div>
+                                <div>
+                                    <strong>4 Cámaras</strong>
+                                    <div style="font-size: 0.9rem; color: var(--text-light);">Desde $1,299</div>
+                                </div>
+                            </div>
+                            <div class="radio-item" onclick="selectCameraCount('6')">
+                                <div class="radio-icon"></div>
+                                <div>
+                                    <strong>6 Cámaras</strong>
+                                    <div style="font-size: 0.9rem; color: var(--text-light);">$1,999 cash o $24.99/mes</div>
+                                </div>
+                            </div>
+                            <div class="radio-item" onclick="selectCameraCount('8')">
+                                <div class="radio-icon"></div>
+                                <div>
+                                    <strong>8 Cámaras</strong>
+                                    <div style="font-size: 0.9rem; color: var(--text-light);">$2,399 cash o $29.99/mes</div>
+                                </div>
+                            </div>
+                            <div class="radio-item" onclick="selectCameraCount('16+')">
+                                <div class="radio-icon"></div>
+                                <div>
+                                    <strong>16+ Cámaras</strong>
+                                    <div style="font-size: 0.9rem; color: var(--text-light);">Cotización personalizada</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="cameraPaymentOptions" style="display: none; margin-top: 2rem;">
+                        <p style="font-weight: 600; margin-bottom: 1rem;">¿Cómo prefieres pagar?</p>
+                        <div class="radio-group">
+                            <div class="radio-item" onclick="selectCameraPayment('cash')">
+                                <div class="radio-icon"></div>
+                                <div>
+                                    <strong>Pago completo (Cash)</strong>
+                                    <div style="font-size: 0.9rem; color: var(--text-light);">Sin financiamiento</div>
+                                </div>
+                            </div>
+                            <div class="radio-item" onclick="selectCameraPayment('financing')">
+                                <div class="radio-icon"></div>
+                                <div>
+                                    <strong>Financiamiento Synchrony</strong>
+                                    <div style="font-size: 0.9rem; color: var(--text-light);">132 meses - Sujeto a aprobación</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-secondary" onclick="prevStep(3)">Anterior</button>
+                        <button class="btn btn-primary" id="nextStep3" onclick="nextStep(3)" disabled>Continuar</button>
+                    </div>
+                `;
+            } else if (type === 'alarm-only') {
+                html = `
+                    <h2 class="step-title">Configuración de Sistema de Alarma</h2>
+                    <p class="step-subtitle">Personaliza tu sistema de seguridad</p>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <p style="font-weight: 600; margin-bottom: 1rem;">¿Prefieres contrato o pago único?</p>
+                        <div class="radio-group">
+                            <div class="radio-item" onclick="selectAlarmContract('yes')">
+                                <div class="radio-icon"></div>
+                                <div>
+                                    <strong>Con Contrato (36 meses)</strong>
+                                    <div style="font-size: 0.9rem; color: var(--text-light);">Desde $42.99/mes con monitoreo 24/7</div>
+                                </div>
+                            </div>
+                            <div class="radio-item" onclick="selectAlarmContract('no')">
+                                <div class="radio-icon"></div>
+                                <div>
+                                    <strong>Sin Contrato</strong>
+                                    <div style="font-size: 0.9rem; color: var(--text-light);">$899 pago único + monitoreo opcional</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="alarmEquipment" style="display: none;">
+                        <p style="font-weight: 600; margin-bottom: 1rem;">Equipos a instalar:</p>
+                        <div class="counter-group">
+                            <div class="counter-item">
+                                <div>
+                                    <div class="counter-label">Sensores de Puertas</div>
+                                    <div class="counter-points">1 punto cada uno</div>
+                                </div>
+                                <div class="counter-controls">
+                                    <button class="counter-btn" onclick="updateCounter('doors', -1)" disabled>−</button>
+                                    <div class="counter-value" id="count-doors">0</div>
+                                    <button class="counter-btn" onclick="updateCounter('doors', 1)">+</button>
+                                </div>
+                            </div>
+                            <div class="counter-item">
+                                <div>
+                                    <div class="counter-label">Ventanas (Shock Sensors)</div>
+                                    <div class="counter-points">2 puntos cada uno</div>
+                                </div>
+                                <div class="counter-controls">
+                                    <button class="counter-btn" onclick="updateCounter('windows', -1)" disabled>−</button>
+                                    <div class="counter-value" id="count-windows">0</div>
+                                    <button class="counter-btn" onclick="updateCounter('windows', 1)">+</button>
+                                </div>
+                            </div>
+                            <div class="counter-item">
+                                <div>
+                                    <div class="counter-label">Sensores de Movimiento</div>
+                                    <div class="counter-points">2 puntos cada uno</div>
+                                </div>
+                                <div class="counter-controls">
+                                    <button class="counter-btn" onclick="updateCounter('motionSensors', -1)" disabled>−</button>
+                                    <div class="counter-value" id="count-motionSensors">0</div>
+                                    <button class="counter-btn" onclick="updateCounter('motionSensors', 1)">+</button>
+                                </div>
+                            </div>
+                            <div class="counter-item">
+                                <div>
+                                    <div class="counter-label">Keyfobs / Llaveros</div>
+                                    <div class="counter-points">1 punto cada uno</div>
+                                </div>
+                                <div class="counter-controls">
+                                    <button class="counter-btn" onclick="updateCounter('keyfobs', -1)" disabled>−</button>
+                                    <div class="counter-value" id="count-keyfobs">0</div>
+                                    <button class="counter-btn" onclick="updateCounter('keyfobs', 1)">+</button>
+                                </div>
+                            </div>
+                            <div class="counter-item">
+                                <div>
+                                    <div class="counter-label">Sensores de Humo/CO</div>
+                                    <div class="counter-points">3 puntos cada uno</div>
+                                </div>
+                                <div class="counter-controls">
+                                    <button class="counter-btn" onclick="updateCounter('smokeCO', -1)" disabled>−</button>
+                                    <div class="counter-value" id="count-smokeCO">0</div>
+                                    <button class="counter-btn" onclick="updateCounter('smokeCO', 1)">+</button>
+                                </div>
+                            </div>
+                            <div class="counter-item">
+                                <div>
+                                    <div class="counter-label">Sirena Adicional</div>
+                                    <div class="counter-points">5 puntos</div>
+                                </div>
+                                <div class="counter-controls">
+                                    <button class="counter-btn" onclick="updateCounter('siren', -1)" disabled>−</button>
+                                    <div class="counter-value" id="count-siren">0</div>
+                                    <button class="counter-btn" onclick="updateCounter('siren', 1)">+</button>
+                                </div>
+                            </div>
+                            <div class="counter-item">
+                                <div>
+                                    <div class="counter-label">Control Remoto</div>
+                                    <div class="counter-points">1 punto</div>
+                                </div>
+                                <div class="counter-controls">
+                                    <button class="counter-btn" onclick="updateCounter('remoteControl', -1)" disabled>−</button>
+                                    <div class="counter-value" id="count-remoteControl">0</div>
+                                    <button class="counter-btn" onclick="updateCounter('remoteControl', 1)">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="pointsSummary"></div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-secondary" onclick="prevStep(3)">Anterior</button>
+                        <button class="btn btn-primary" id="nextStep3" onclick="nextStep(3)" disabled>Continuar</button>
+                    </div>
+                `;
+            } else if (type === 'alarm-cameras') {
+                html = `
+                    <h2 class="step-title">Alarma + Cámaras - Protección Completa</h2>
+                    <p class="step-subtitle">Contrato de 36 meses con monitoreo 24/7</p>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <p style="font-weight: 600; margin-bottom: 1rem;">¿Cuántas cámaras necesitas?</p>
+                        <div class="radio-group">
+                            <div class="radio-item" onclick="selectAlarmCameras('6')">
+                                <div class="radio-icon"></div>
+                                <div>
+                                    <strong>Alarma + 6 Cámaras Full Color</strong>
+                                    <div style="font-size: 0.9rem; color: var(--text-light);">
+                                        ${config.propertyType === 'residential' ? 'Desde $59.99/mes' : 'Desde $62.99/mes'}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="radio-item" onclick="selectAlarmCameras('8')">
+                                <div class="radio-icon"></div>
+                                <div>
+                                    <strong>Alarma + 8 Cámaras Full Color</strong>
+                                    <div style="font-size: 0.9rem; color: var(--text-light);">
+                                        $63.99/mes${config.propertyType === 'commercial' ? ' + $99 instalación' : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="alarmCamerasEquipment" style="display: none;">
+                        <p style="font-weight: 600; margin-bottom: 1rem;">Sensores adicionales (5 puntos incluidos):</p>
+                        <div class="counter-group">
+                            <div class="counter-item">
+                                <div>
+                                    <div class="counter-label">Sensores de Puertas</div>
+                                    <div class="counter-points">1 punto cada uno</div>
+                                </div>
+                                <div class="counter-controls">
+                                    <button class="counter-btn" onclick="updateCounter('doors', -1)" disabled>−</button>
+                                    <div class="counter-value" id="count-doors">0</div>
+                                    <button class="counter-btn" onclick="updateCounter('doors', 1)">+</button>
+                                </div>
+                            </div>
+                            <div class="counter-item">
+                                <div>
+                                    <div class="counter-label">Ventanas (Shock Sensors)</div>
+                                    <div class="counter-points">2 puntos cada uno</div>
+                                </div>
+                                <div class="counter-controls">
+                                    <button class="counter-btn" onclick="updateCounter('windows', -1)" disabled>−</button>
+                                    <div class="counter-value" id="count-windows">0</div>
+                                    <button class="counter-btn" onclick="updateCounter('windows', 1)">+</button>
+                                </div>
+                            </div>
+                            <div class="counter-item">
+                                <div>
+                                    <div class="counter-label">Sensores de Movimiento</div>
+                                    <div class="counter-points">2 puntos cada uno</div>
+                                </div>
+                                <div class="counter-controls">
+                                    <button class="counter-btn" onclick="updateCounter('motionSensors', -1)" disabled>−</button>
+                                    <div class="counter-value" id="count-motionSensors">0</div>
+                                    <button class="counter-btn" onclick="updateCounter('motionSensors', 1)">+</button>
+                                </div>
+                            </div>
+                            <div class="counter-item">
+                                <div>
+                                    <div class="counter-label">Keyfobs / Llaveros</div>
+                                    <div class="counter-points">1 punto cada uno</div>
+                                </div>
+                                <div class="counter-controls">
+                                    <button class="counter-btn" onclick="updateCounter('keyfobs', -1)" disabled>−</button>
+                                    <div class="counter-value" id="count-keyfobs">0</div>
+                                    <button class="counter-btn" onclick="updateCounter('keyfobs', 1)">+</button>
+                                </div>
+                            </div>
+                            <div class="counter-item">
+                                <div>
+                                    <div class="counter-label">Sensores de Humo/CO</div>
+                                    <div class="counter-points">3 puntos cada uno</div>
+                                </div>
+                                <div class="counter-controls">
+                                    <button class="counter-btn" onclick="updateCounter('smokeCO', -1)" disabled>−</button>
+                                    <div class="counter-value" id="count-smokeCO">0</div>
+                                    <button class="counter-btn" onclick="updateCounter('smokeCO', 1)">+</button>
+                                </div>
+                            </div>
+                            <div class="counter-item">
+                                <div>
+                                    <div class="counter-label">Sirena Adicional</div>
+                                    <div class="counter-points">5 puntos</div>
+                                </div>
+                                <div class="counter-controls">
+                                    <button class="counter-btn" onclick="updateCounter('siren', -1)" disabled>−</button>
+                                    <div class="counter-value" id="count-siren">0</div>
+                                    <button class="counter-btn" onclick="updateCounter('siren', 1)">+</button>
+                                </div>
+                            </div>
+                            <div class="counter-item">
+                                <div>
+                                    <div class="counter-label">Control Remoto</div>
+                                    <div class="counter-points">1 punto</div>
+                                </div>
+                                <div class="counter-controls">
+                                    <button class="counter-btn" onclick="updateCounter('remoteControl', -1)" disabled>−</button>
+                                    <div class="counter-value" id="count-remoteControl">0</div>
+                                    <button class="counter-btn" onclick="updateCounter('remoteControl', 1)">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="pointsSummary"></div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-secondary" onclick="prevStep(3)">Anterior</button>
+                        <button class="btn btn-primary" id="nextStep3" onclick="nextStep(3)">Continuar</button>
+                    </div>
+                `;
             }
-            
-            document.getElementById('nextStep2').disabled = config.upgradeItems.length === 0;
+
+            document.getElementById('step3Content').innerHTML = html;
         }
 
-        // Step 3: Structure
-        function selectLevels(levels) {
-            config.levels = levels;
-            document.querySelectorAll('#step3 .radio-group:first-of-type .radio-item').forEach(item => {
-                item.classList.remove('selected');
-            });
-            event.target.closest('.radio-item').classList.add('selected');
-            updateStep3Button();
-        }
-
-        function selectDoors(doors) {
-            config.doors = doors;
-            document.querySelectorAll('#step3 .radio-group:last-of-type .radio-item').forEach(item => {
-                item.classList.remove('selected');
-            });
-            event.target.closest('.radio-item').classList.add('selected');
-            updateStep3Button();
-        }
-
-        function updateStep3Button() {
-            document.getElementById('nextStep3').disabled = !(config.levels && config.doors);
-        }
-
-        // Step 4: Alarms
-        function toggleAlarmArea(area) {
-            const element = event.target.closest('.checkbox-item');
-            element.classList.toggle('checked');
-            
-            const index = config.alarmAreas.indexOf(area);
-            if (index > -1) {
-                config.alarmAreas.splice(index, 1);
-            } else {
-                config.alarmAreas.push(area);
-            }
-            
-            updateStep4Button();
-        }
-
-        function selectMonitoring(value) {
-            config.monitoring = value;
-            document.querySelectorAll('#step4 .radio-group .radio-item').forEach(item => {
-                item.classList.remove('selected');
-            });
-            event.target.closest('.radio-item').classList.add('selected');
-            updateStep4Button();
-        }
-
-        function updateStep4Button() {
-            document.getElementById('nextStep4').disabled = !(config.alarmAreas.length > 0 && config.monitoring);
-        }
-
-        // Step 5: Cameras
+        // Selection functions for Step 3
         function selectCameraCount(count) {
             config.cameraCount = count;
-            document.querySelectorAll('#step5 .radio-group .radio-item').forEach(item => {
-                item.classList.remove('selected');
-            });
-            event.target.closest('.radio-item').classList.add('selected');
-            updateStep5Button();
-        }
-
-        function toggleCameraLocation(location) {
-            const element = event.target.closest('.checkbox-item');
-            
-            // Clear other selections if selecting new location
-            document.querySelectorAll('#step5 .checkbox-group:nth-of-type(1) .checkbox-item').forEach(item => {
-                item.classList.remove('checked');
-            });
-            config.cameraLocations = [];
-            
-            element.classList.add('checked');
-            config.cameraLocations.push(location);
-            updateStep5Button();
-        }
-
-        function toggleCameraFeature(feature) {
-            const element = event.target.closest('.checkbox-item');
-            element.classList.toggle('checked');
-            
-            const index = config.cameraFeatures.indexOf(feature);
-            if (index > -1) {
-                config.cameraFeatures.splice(index, 1);
-            } else {
-                config.cameraFeatures.push(feature);
-            }
-            
-            updateStep5Button();
-        }
-
-        function updateStep5Button() {
-            document.getElementById('nextStep5').disabled = !(config.cameraCount && config.cameraLocations.length > 0);
-        }
-
-        // Step 6: Connectivity
-        function toggleMonitorDevice(device) {
-            const element = event.target.closest('.checkbox-item');
-            element.classList.toggle('checked');
-            
-            const index = config.monitorDevices.indexOf(device);
-            if (index > -1) {
-                config.monitorDevices.splice(index, 1);
-            } else {
-                config.monitorDevices.push(device);
-            }
-            
-            updateStep6Button();
-        }
-
-        function selectInternet(value) {
-            config.internet = value;
-            document.querySelectorAll('#step6 .radio-group .radio-item').forEach(item => {
+            document.querySelectorAll('#step3 .radio-group .radio-item').forEach(item => {
                 item.classList.remove('selected');
             });
             event.target.closest('.radio-item').classList.add('selected');
             
-            // Show warning if no internet
-            if (value === 'no' || value === 'unsure') {
-                document.getElementById('noInternetWarning').style.display = 'flex';
+            if (count === '16+') {
+                document.getElementById('cameraPaymentOptions').style.display = 'none';
+                document.getElementById('nextStep3').disabled = false;
+            } else if (count === '4') {
+                document.getElementById('cameraPaymentOptions').style.display = 'none';
+                document.getElementById('nextStep3').disabled = false;
             } else {
-                document.getElementById('noInternetWarning').style.display = 'none';
+                document.getElementById('cameraPaymentOptions').style.display = 'block';
+                document.getElementById('nextStep3').disabled = true;
             }
-            
-            updateStep6Button();
         }
 
-        function updateStep6Button() {
-            document.getElementById('nextStep6').disabled = !(config.monitorDevices.length > 0 && config.internet);
+        function selectCameraPayment(payment) {
+            config.cameraPayment = payment;
+            document.querySelectorAll('#cameraPaymentOptions .radio-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            event.target.closest('.radio-item').classList.add('selected');
+            document.getElementById('nextStep3').disabled = false;
         }
 
-        // Save Contact Info
-        function saveContactInfo() {
-            config.contact = {
-                name: document.getElementById('fullName').value,
-                phone: document.getElementById('phone').value,
-                email: document.getElementById('email').value,
-                address: document.getElementById('address').value,
-                timeframe: document.getElementById('timeframe').value,
-                comments: document.getElementById('comments').value
-            };
-        }
-
-        // Calculate Recommended Package
-        function calculatePackage() {
-            let packageType = 'basic';
+        function selectAlarmContract(hasContract) {
+            config.alarmContract = hasContract;
+            document.querySelectorAll('#step3 .radio-group .radio-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            event.target.closest('.radio-item').classList.add('selected');
             
-            // Check for custom solution triggers
-            if (config.cameraCount === '17+') {
-                return 'custom';
-            }
-            
-            if (config.internet === 'no') {
-                return 'custom-technical';
-            }
-            
-            // Calculate complexity score
-            let complexityScore = 0;
-            
-            // Levels
-            if (config.levels === '1') complexityScore += 1;
-            else if (config.levels === '2') complexityScore += 2;
-            else if (config.levels === '3+') complexityScore += 3;
-            
-            // Doors
-            if (config.doors === '1' || config.doors === '2') complexityScore += 1;
-            else if (config.doors === '3') complexityScore += 2;
-            else if (config.doors === '4+') complexityScore += 3;
-            
-            // Alarm areas
-            complexityScore += config.alarmAreas.length * 0.5;
-            
-            // Camera count
-            if (config.cameraCount === '4') complexityScore += 1;
-            else if (config.cameraCount === '8') complexityScore += 2;
-            else if (config.cameraCount === '16') complexityScore += 3;
-            
-            // Determine package
-            if (complexityScore <= 4) {
-                packageType = 'basic';
-            } else if (complexityScore <= 8) {
-                packageType = 'complete';
+            if (hasContract === 'yes') {
+                document.getElementById('alarmEquipment').style.display = 'block';
+                updatePointsSummary();
+                document.getElementById('nextStep3').disabled = false;
             } else {
-                packageType = 'advanced';
+                document.getElementById('alarmEquipment').style.display = 'none';
+                document.getElementById('nextStep3').disabled = false;
             }
-            
-            return packageType;
         }
 
-        // Generate Package Display
-        function generatePackageDisplay() {
-            const packageType = calculatePackage();
-            config.recommendedPackage = packageType;
-            
-            const container = document.getElementById('packageRecommendation');
+        function selectAlarmCameras(count) {
+            config.alarmCameras = count;
+            document.querySelectorAll('#step3 .radio-group .radio-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            event.target.closest('.radio-item').classList.add('selected');
+            document.getElementById('alarmCamerasEquipment').style.display = 'block';
+            updatePointsSummary();
+        }
+
+        // Generate Quote
+        function generateQuote() {
+            const totalPoints = calculateTotalPoints();
+            const extraPoints = Math.max(0, totalPoints - INCLUDED_POINTS);
+            const extraCost = extraPoints * EXTRA_POINT_COST;
+            const needsTechVisit = totalPoints >= TECH_VISIT_THRESHOLD;
+
             let html = '';
-            
-            if (packageType === 'custom' || packageType === 'custom-technical') {
+
+            if (needsTechVisit && (config.systemType === 'alarm-only' || config.systemType === 'alarm-cameras')) {
                 html = `
                     <div class="package-card recommended">
                         <div class="package-header">
-                            <div class="package-icon">🧠</div>
-                            <h2 class="package-title">Solución Personalizada</h2>
-                            <p class="package-subtitle">Tu proyecto requiere evaluación técnica especializada</p>
+                            <div class="package-icon">🔧</div>
+                            <h2 class="package-title">Visita Técnica Recomendada</h2>
+                            <p class="package-subtitle">Tu sistema requiere una evaluación personalizada</p>
                         </div>
                         
-                        ${packageType === 'custom-technical' ? `
-                            <div class="alert-box alert-warning">
-                                <span class="alert-icon">⚠️</span>
-                                <div>
-                                    <strong>Evaluación técnica requerida:</strong> Tu propiedad necesita una visita de nuestro equipo para determinar la mejor solución de conectividad.
-                                </div>
+                        <div class="alert-box alert-warning">
+                            <span class="alert-icon">⚠️</span>
+                            <div>
+                                Tu configuración supera los ${TECH_VISIT_THRESHOLD} puntos (tienes ${totalPoints} puntos). 
+                                Para garantizar la mejor solución, recomendamos una visita técnica gratuita.
                             </div>
-                        ` : ''}
-                        
-                        <ul class="package-features">
-                            <li>Consulta técnica gratuita en sitio</li>
-                            <li>Diseño de sistema personalizado</li>
-                            <li>Propuesta detallada con opciones</li>
-                            <li>Instalación profesional certificada</li>
-                            <li>Garantía extendida de equipos</li>
-                            <li>Soporte prioritario</li>
-                        </ul>
-                        
-                        <div class="package-price">
-                            <div class="price-label">Cotización personalizada</div>
-                            <div class="price-amount">A cotizar</div>
-                            <p class="price-period">Nuestro equipo te contactará en 24 horas</p>
                         </div>
-                        
-                        <button class="select-package-btn" onclick="submitConfiguration()">Solicitar Evaluación Técnica</button>
+
+                        <ul class="package-features">
+                            <li>Evaluación técnica gratuita en sitio</li>
+                            <li>Diseño personalizado de tu sistema</li>
+                            <li>Cotización detallada y exacta</li>
+                            <li>Recomendaciones de nuestros expertos</li>
+                            <li>Sin compromiso</li>
+                        </ul>
+
+                        <button class="select-package-btn" onclick="submitConfiguration()">Solicitar Visita Técnica</button>
                     </div>
                 `;
-            } else {
-                const packages = {
-                    basic: {
-                        icon: '🔐',
-                        title: 'Paquete Básico',
-                        subtitle: 'Ideal para apartamentos o casas pequeñas',
-                        price: 'Desde $99',
-                        monthly: '/mes',
-                        installation: '$599',
-                        features: [
-                            'Panel inteligente ADT',
-                            'Sensores en puertas principales',
-                            '4 cámaras VeoSmart (interior o exterior)',
-                            'App móvil para iOS y Android',
-                            'Notificaciones en tiempo real',
-                            'Instalación profesional incluida',
-                            'Monitoreo 24/7 opcional'
-                        ]
-                    },
-                    complete: {
-                        icon: '🔐📷',
-                        title: 'Paquete Completo',
-                        subtitle: 'Protección integral interior y exterior',
-                        price: 'Desde $149',
-                        monthly: '/mes',
-                        installation: '$999',
-                        features: [
-                            'Panel inteligente ADT avanzado',
-                            'Sensores en puertas y áreas clave',
-                            '8 cámaras VeoSmart interiores/exteriores',
-                            'App móvil con múltiples usuarios',
-                            'Grabación en la nube (30 días)',
-                            'Monitoreo profesional 24/7 incluido',
-                            'Instalación y configuración completa',
-                            'Garantía de 2 años'
-                        ]
-                    },
-                    advanced: {
-                        icon: '🛡️',
-                        title: 'Paquete Avanzado',
-                        subtitle: 'Propiedades grandes o multi-nivel',
-                        price: 'Desde $199',
-                        monthly: '/mes',
-                        installation: '$1,499',
-                        features: [
-                            'Panel avanzado con pantalla táctil',
-                            'Sensores completos por niveles',
-                            '16 cámaras o más',
-                            'Audio de dos vías en cámaras',
-                            'Grabación continua 24/7',
-                            'Acceso remoto multi-usuario',
-                            'Monitoreo profesional prioritario',
-                            'Evaluación técnica incluida',
-                            'Garantía extendida de 3 años'
-                        ]
-                    }
-                };
-                
-                const pkg = packages[packageType];
-                const hasMonitoring = config.monitoring === 'yes';
-                
-                html = `
-                    <div class="package-card recommended">
-                        <div class="package-header">
-                            <div class="package-icon">${pkg.icon}</div>
-                            <h2 class="package-title">${pkg.title}</h2>
-                            <p class="package-subtitle">${pkg.subtitle}</p>
-                        </div>
-                        
-                        <div class="package-price">
-                            ${hasMonitoring ? `
-                                <div class="price-label">Mensualidad con Monitoreo 24/7</div>
-                                <div class="price-amount">${pkg.price}<span style="font-size: 1.2rem;">${pkg.monthly}</span></div>
-                                <p class="price-period">Instalación: ${pkg.installation}</p>
-                            ` : `
-                                <div class="price-label">Instalación Total</div>
-                                <div class="price-amount">${pkg.installation}</div>
-                                <p class="price-period">Sin mensualidades • Sin contratos</p>
-                            `}
-                        </div>
-                        
-                        <ul class="package-features">
-                            ${pkg.features.map(f => `<li>${f}</li>`).join('')}
-                        </ul>
-                        
-                        ${!hasMonitoring ? `
-                            <div class="alert-box alert-warning">
+            } else if (config.systemType === 'cameras-only') {
+                if (config.cameraCount === '16+') {
+                    html = `
+                        <div class="package-card recommended">
+                            <div class="package-header">
+                                <div class="package-icon">📹</div>
+                                <h2 class="package-title">Sistema de 16+ Cámaras</h2>
+                                <p class="package-subtitle">Cotización personalizada</p>
+                            </div>
+                            
+                            <div class="alert-box alert-info">
                                 <span class="alert-icon">💡</span>
                                 <div>
-                                    <strong>Opción sin monitoreo:</strong> Puedes agregar monitoreo profesional 24/7 por solo ${pkg.price}/mes en cualquier momento.
+                                    Para sistemas de 16 o más cámaras, necesitamos evaluar tu propiedad 
+                                    para ofrecerte la mejor solución y precio.
+                                </div>
+                            </div>
+
+                            <ul class="package-features">
+                                <li>Evaluación técnica gratuita</li>
+                                <li>16+ Cámaras VeoSmart Full Color</li>
+                                <li>Diseño personalizado del sistema</li>
+                                <li>Instalación profesional</li>
+                                <li>Soporte técnico incluido</li>
+                            </ul>
+
+                            <button class="select-package-btn" onclick="submitConfiguration()">Solicitar Cotización</button>
+                        </div>
+                    `;
+                } else {
+                    const prices = {
+                        '4': { cash: 1299, monthly: null },
+                        '6': { cash: 1999, monthly: 24.99 },
+                        '8': { cash: 2399, monthly: 29.99 }
+                    };
+                    const price = prices[config.cameraCount];
+                    const isCash = config.cameraPayment === 'cash' || config.cameraCount === '4';
+
+                    html = `
+                        <div class="package-card recommended">
+                            <div class="package-header">
+                                <div class="package-icon">📹</div>
+                                <h2 class="package-title">${config.cameraCount} Cámaras VeoSmart</h2>
+                                <p class="package-subtitle">Sistema sin contrato</p>
+                            </div>
+                            
+                            <div class="package-price">
+                                <div class="price-label">${isCash ? 'Pago Único' : 'Financiamiento Synchrony'}</div>
+                                <div class="price-amount">
+                                    ${isCash ? `$${price.cash.toLocaleString()}` : `$${price.monthly}`}
+                                    ${!isCash ? '<span style="font-size: 1.2rem;">/mes</span>' : ''}
+                                </div>
+                                ${!isCash ? `
+                                    <div class="price-period">132 meses × $${price.monthly} = $${(price.monthly * 132).toLocaleString()}</div>
+                                    <div class="price-period" style="margin-top: 0.5rem;">O paga $${price.cash.toLocaleString()} cash</div>
+                                ` : ''}
+                            </div>
+
+                            <ul class="package-features">
+                                <li>${config.cameraCount} Cámaras VeoSmart Full Color IP</li>
+                                <li>Visión nocturna full color</li>
+                                <li>Acceso remoto desde tu celular</li>
+                                <li>Grabación en la nube (opcional)</li>
+                                <li>Instalación profesional incluida</li>
+                                <li>Sin contratos ni mensualidades${!isCash ? ' de equipo' : ''}</li>
+                                <li>Garantía del fabricante</li>
+                            </ul>
+
+                            ${!isCash ? `
+                                <div class="alert-box alert-info">
+                                    <span class="alert-icon">💳</span>
+                                    <div>
+                                        <strong>Financiamiento Synchrony</strong><br>
+                                        Sujeto a aprobación de crédito. Sin pagos de equipo, solo monitoreo opcional.
+                                    </div>
+                                </div>
+                            ` : ''}
+
+                            <button class="select-package-btn" onclick="submitConfiguration()">Solicitar Este Paquete</button>
+                        </div>
+                    `;
+                }
+            } else if (config.systemType === 'alarm-only') {
+                if (config.alarmContract === 'yes') {
+                    html = `
+                        <div class="package-card recommended">
+                            <div class="package-header">
+                                <div class="package-icon">🔐</div>
+                                <h2 class="package-title">Sistema de Alarma con Monitoreo</h2>
+                                <p class="package-subtitle">Contrato 36 meses</p>
+                            </div>
+                            
+                            <div class="package-price">
+                                <div class="price-label">Mensualidad</div>
+                                <div class="price-amount">$42.99<span style="font-size: 1.2rem;">/mes</span></div>
+                                <div class="price-period">Monitoreo profesional 24/7 incluido</div>
+                                ${extraCost > 0 ? `
+                                    <div class="price-breakdown">
+                                        <div class="price-breakdown-item">
+                                            <span>Cargos iniciales adicionales:</span>
+                                            <span></span>
+                                        </div>
+                                        <div class="price-breakdown-item">
+                                            <span>Equipos adicionales (${extraPoints} pts)</span>
+                                            <span>$${extraCost}</span>
+                                        </div>
+                                        <div class="price-breakdown-item">
+                                            <span>Cargo de activación</span>
+                                            <span>${config.propertyType === 'residential' ? '$99' : '$299'}</span>
+                                        </div>
+                                    </div>
+                                ` : `
+                                    <div class="price-breakdown">
+                                        <div class="price-breakdown-item">
+                                            <span>Cargo de activación</span>
+                                            <span>${config.propertyType === 'residential' ? '$99' : '$299'}</span>
+                                        </div>
+                                    </div>
+                                `}
+                            </div>
+
+                            ${config.propertyType === 'residential' ? `
+                                <div class="alert-box alert-info">
+                                    <span class="alert-icon">⚡</span>
+                                    <div>
+                                        <strong>Oferta especial de activación:</strong><br>
+                                        • Normal: $99<br>
+                                        • Urgente (solicita en 24h): GRATIS*<br>
+                                        <span style="font-size: 0.85rem;">*Sujeto a aprobación</span>
+                                    </div>
+                                </div>
+                            ` : ''}
+
+                            <ul class="package-features">
+                                <li>Panel de alarma inteligente</li>
+                                <li>Equipos según configuración (${totalPoints} puntos)</li>
+                                <li>Monitoreo profesional 24/7</li>
+                                <li>Respuesta de emergencia</li>
+                                <li>App móvil incluida</li>
+                                <li>Instalación profesional</li>
+                                <li>Garantía de equipos</li>
+                            </ul>
+
+                            <button class="select-package-btn" onclick="submitConfiguration()">Solicitar Este Paquete</button>
+                        </div>
+                    `;
+                } else {
+                    html = `
+                        <div class="package-card recommended">
+                            <div class="package-header">
+                                <div class="package-icon">🔐</div>
+                                <h2 class="package-title">Sistema de Alarma sin Contrato</h2>
+                                <p class="package-subtitle">Pago único de equipo</p>
+                            </div>
+                            
+                            <div class="package-price">
+                                <div class="price-label">Inversión Inicial</div>
+                                <div class="price-amount">$899</div>
+                                <div class="price-period">Monitoreo opcional (extra)</div>
+                            </div>
+
+                            <ul class="package-features">
+                                <li>Panel de alarma completo</li>
+                                <li>Sensores básicos incluidos</li>
+                                <li>App móvil para auto-monitoreo</li>
+                                <li>Notificaciones en tu celular</li>
+                                <li>Instalación profesional</li>
+                                <li>Sin contratos ni mensualidades</li>
+                                <li>Opción de agregar monitoreo después</li>
+                            </ul>
+
+                            <div class="alert-box alert-info">
+                                <span class="alert-icon">💡</span>
+                                <div>
+                                    Puedes agregar monitoreo profesional 24/7 en cualquier momento por $42.99/mes
+                                </div>
+                            </div>
+
+                            <button class="select-package-btn" onclick="submitConfiguration()">Solicitar Este Paquete</button>
+                        </div>
+                    `;
+                }
+            } else if (config.systemType === 'alarm-cameras') {
+                const monthlyPrices = {
+                    residential: { '6': 59.99, '8': 63.99 },
+                    commercial: { '6': 62.99, '8': 63.99 }
+                };
+                const monthlyPrice = monthlyPrices[config.propertyType][config.alarmCameras];
+                const hasInstallation = config.propertyType === 'commercial' && config.alarmCameras === '8';
+
+                html = `
+                    <div class="package-card recommended">
+                        <div class="package-header">
+                            <div class="package-icon">🛡️</div>
+                            <h2 class="package-title">Alarma + ${config.alarmCameras} Cámaras</h2>
+                            <p class="package-subtitle">Protección completa con monitoreo 24/7</p>
+                        </div>
+                        
+                        <div class="package-price">
+                            <div class="price-label">Mensualidad</div>
+                            <div class="price-amount">$${monthlyPrice}<span style="font-size: 1.2rem;">/mes</span></div>
+                            <div class="price-period">Contrato 36 meses</div>
+                            <div class="price-breakdown">
+                                ${hasInstallation ? `
+                                    <div class="price-breakdown-item">
+                                        <span>Instalación</span>
+                                        <span>$99</span>
+                                    </div>
+                                ` : ''}
+                                ${extraCost > 0 ? `
+                                    <div class="price-breakdown-item">
+                                        <span>Equipos adicionales (${extraPoints} pts)</span>
+                                        <span>$${extraCost}</span>
+                                    </div>
+                                ` : ''}
+                                <div class="price-breakdown-item">
+                                    <span>Cargo de activación</span>
+                                    <span>${config.propertyType === 'residential' ? '$99' : '$299'}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        ${config.propertyType === 'residential' ? `
+                            <div class="alert-box alert-info">
+                                <span class="alert-icon">⚡</span>
+                                <div>
+                                    <strong>Oferta especial de activación:</strong><br>
+                                    • Normal: $99<br>
+                                    • Urgente (solicita en 24h): GRATIS*<br>
+                                    <span style="font-size: 0.85rem;">*Sujeto a aprobación</span>
                                 </div>
                             </div>
                         ` : ''}
-                        
+
+                        <ul class="package-features">
+                            <li>Panel de alarma avanzado</li>
+                            <li>${config.alarmCameras} Cámaras VeoSmart Full Color</li>
+                            <li>Sensores según configuración (${totalPoints} puntos)</li>
+                            <li>Monitoreo profesional 24/7</li>
+                            <li>Grabación en la nube</li>
+                            <li>Acceso remoto desde app</li>
+                            <li>Visión nocturna full color</li>
+                            <li>Respuesta de emergencia</li>
+                            <li>Instalación profesional completa</li>
+                        </ul>
+
                         <button class="select-package-btn" onclick="submitConfiguration()">Solicitar Este Paquete</button>
-                    </div>
-                    
-                    <div style="text-align: center; margin-top: 2rem; color: var(--text-light);">
-                        <p>¿Necesitas algo diferente? También ofrecemos planes DIY y financiamiento.</p>
-                        <p style="margin-top: 0.5rem;"><strong>Nuestro equipo te contactará para ajustar cualquier detalle.</strong></p>
                     </div>
                 `;
             }
-            
-            container.innerHTML = html;
+
+            document.getElementById('quoteContent').innerHTML = html;
         }
 
         // Navigation
         function nextStep(current) {
-            // Save contact info before showing package
-            if (current === 7) {
+            // Save contact info before showing quote
+            if (current === 4) {
                 if (!validateContactForm()) return;
                 saveContactInfo();
-                generatePackageDisplay();
+                generateQuote();
+            }
+
+            // Generate step 3 content
+            if (current === 2) {
+                generateStep3Content();
             }
             
             // Hide current step
@@ -1788,16 +1953,27 @@
             return true;
         }
 
+        // Save Contact Info
+        function saveContactInfo() {
+            config.contact = {
+                name: document.getElementById('fullName').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                address: document.getElementById('address').value,
+                timeframe: document.getElementById('timeframe').value,
+                comments: document.getElementById('comments').value
+            };
+        }
+
         // Submit Configuration
         function submitConfiguration() {
             console.log('Configuration submitted:', config);
             
             // Show success message
-            document.getElementById('step8').classList.remove('active');
+            document.getElementById('step5').classList.remove('active');
             document.getElementById('stepSuccess').classList.add('active');
             
             // In production, send this data to your backend/email service
-            // sendToBackend(config);
         }
     </script>
 </body>
