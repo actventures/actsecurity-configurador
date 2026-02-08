@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACT Security PR - Configurador de Sistemas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a2463;
+            --primary-light: #1e3a8a;
+            --accent: #fb8500;
+            --accent-dark: #d97706;
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --success: #22c55e;
+            --border: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .header-info {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .header-info a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .header-info a:hover {
+            color: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(251, 133, 0, 0.15) 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 600px;
+        }
+
+        .cta-button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(251, 133, 0, 0.4);
+        }
+
+        .cta-button:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(251, 133, 0, 0.5);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: var(--surface);
+            padding: 2rem 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            display: none;
+        }
+
+        .progress-container.active {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--border);
+            z-index: 1;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            height: 3px;
+            background: var(--accent);
+            z-index: 2;
+            transition: width 0.5s ease;
+            width: var(--progress-width, 0%);
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 3;
+            flex: 1;
+        }
+
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--surface);
+            border: 3px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            transition: all 0.3s;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-step.active .step-circle {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .progress-step.completed .step-circle {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-light);
+            text-align: center;
+        }
+
+        .progress-step.active .step-label {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Configurator */
+        .configurator {
+            padding: 3rem 0;
+            min-height: 60vh;
+        }
+
+        .step-content {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 3rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            display: none;
+            animation: fadeInScale 0.5s ease;
+        }
+
+        .step-content.active {
+            display: block;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .step-title {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .step-subtitle {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        /* Selection Cards */
+        .selection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .selection-card {
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: var(--surface);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .selection-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .selection-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .selection-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .selection-card.selected {
+            border-color: var(--accent);
+            background: linear-gradient(135deg, rgba(251, 133, 0, 0.05) 0%, rgba(251, 133, 0, 0.02) 100%);
+        }
+
+        .selection-card.selected::before {
+            transform: scaleX(1);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .card-description {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Checkbox Cards */
+        .checkbox-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.5rem;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 1rem;
+        }
+
+        .checkbox-card:hover {
+            border-color: var(--accent);
+            background: rgba(251, 133, 0, 0.02);
+        }
+
+        .checkbox-card.selected {
+            border-color: var(--accent);
+            background: linear-gradient(135deg, rgba(251, 133, 0, 0.08) 0%, rgba(251, 133, 0, 0.03) 100%);
+        }
+
+        .checkbox-icon {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.3s;
+        }
+
+        .checkbox-card.selected .checkbox-icon {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .checkbox-card.selected .checkbox-icon::after {
+            content: '✓';
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.875rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Work Sans', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(251, 133, 0, 0.1);
+        }
+
+        textarea.form-input {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2.5rem;
+            justify-content: space-between;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Work Sans', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(251, 133, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 2px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Summary Section */
+        .summary-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .summary-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .summary-label {
+            font-weight: 500;
+        }
+
+        .summary-value {
+            font-weight: 600;
+        }
+
+        .price-estimate {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        .price-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        /* Success Message */
+        .success-message {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .success-icon {
+            font-size: 5rem;
+            color: var(--success);
+            margin-bottom: 1rem;
+            animation: scaleIn 0.5s ease;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .success-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .success-text {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 3rem 0 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .header-info {
+                display: none;
+            }
+
+            .selection-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .step-content {
+                padding: 2rem 1.5rem;
+            }
+
+            .progress-step .step-label {
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">ACT<span>Security</span>PR</div>
+                <div class="header-info">
+                    <a href="tel:+1787">📞 (787) XXX-XXXX</a>
+                    <a href="mailto:info@actsecuritypr.com">✉️ Contacto</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="heroSection">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Protege lo que más importa</h1>
+                <p>Configura tu sistema de seguridad personalizado en minutos. Cámaras, alarmas y control de acceso para tu hogar o negocio en Puerto Rico.</p>
+                <button class="cta-button" onclick="startConfigurator()">Comenzar Configuración</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress Bar -->
+    <div class="progress-container" id="progressContainer">
+        <div class="container">
+            <div class="progress-bar" id="progressBar">
+                <div class="progress-step active" data-step="1">
+                    <div class="step-circle">1</div>
+                    <div class="step-label">Propiedad</div>
+                </div>
+                <div class="progress-step" data-step="2">
+                    <div class="step-circle">2</div>
+                    <div class="step-label">Sistemas</div>
+                </div>
+                <div class="progress-step" data-step="3">
+                    <div class="step-circle">3</div>
+                    <div class="step-label">Detalles</div>
+                </div>
+                <div class="progress-step" data-step="4">
+                    <div class="step-circle">4</div>
+                    <div class="step-label">Contacto</div>
+                </div>
+                <div class="progress-step" data-step="5">
+                    <div class="step-circle">5</div>
+                    <div class="step-label">Resumen</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Configurator -->
+    <section class="configurator">
+        <div class="container">
+            <!-- Step 1: Property Type -->
+            <div class="step-content active" id="step1">
+                <h2 class="step-title">¿Qué tipo de propiedad deseas proteger?</h2>
+                <p class="step-subtitle">Selecciona el tipo de propiedad para personalizar tu sistema</p>
+                
+                <div class="selection-grid">
+                    <div class="selection-card" onclick="selectPropertyType('residence')">
+                        <div class="card-icon">🏠</div>
+                        <h3 class="card-title">Residencia</h3>
+                        <p class="card-description">Casa unifamiliar, apartamento o condominio</p>
+                    </div>
+                    <div class="selection-card" onclick="selectPropertyType('business')">
+                        <div class="card-icon">🏢</div>
+                        <h3 class="card-title">Negocio</h3>
+                        <p class="card-description">Oficina, tienda, restaurante o comercio</p>
+                    </div>
+                    <div class="selection-card" onclick="selectPropertyType('building')">
+                        <div class="card-icon">🏗️</div>
+                        <h3 class="card-title">Edificio</h3>
+                        <p class="card-description">Edificio completo o complejo de unidades</p>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="goToHero()">Volver</button>
+                    <button class="btn btn-primary" id="nextStep1" onclick="nextStep(1)" disabled>Continuar</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Security Systems -->
+            <div class="step-content" id="step2">
+                <h2 class="step-title">¿Qué sistemas de seguridad necesitas?</h2>
+                <p class="step-subtitle">Puedes seleccionar uno o más sistemas</p>
+                
+                <div class="checkbox-card" onclick="toggleSystem('cameras')">
+                    <div class="checkbox-icon"></div>
+                    <div>
+                        <h3 class="card-title">📹 Cámaras de Seguridad (CCTV)</h3>
+                        <p class="card-description">Monitoreo 24/7, grabación en la nube, acceso remoto y visión nocturna</p>
+                    </div>
+                </div>
+
+                <div class="checkbox-card" onclick="toggleSystem('alarms')">
+                    <div class="checkbox-icon"></div>
+                    <div>
+                        <h3 class="card-title">🚨 Sistema de Alarmas</h3>
+                        <p class="card-description">Sensores de movimiento, puertas/ventanas, y alertas inmediatas</p>
+                    </div>
+                </div>
+
+                <div class="checkbox-card" onclick="toggleSystem('access')">
+                    <div class="checkbox-icon"></div>
+                    <div>
+                        <h3 class="card-title">🔐 Control de Acceso</h3>
+                        <p class="card-description">Cerraduras inteligentes, lectores de tarjetas y biométricos</p>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="prevStep(2)">Anterior</button>
+                    <button class="btn btn-primary" id="nextStep2" onclick="nextStep(2)" disabled>Continuar</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Details -->
+            <div class="step-content" id="step3">
+                <h2 class="step-title">Detalles de tu sistema</h2>
+                <p class="step-subtitle">Ayúdanos a dimensionar mejor tu proyecto</p>
+                
+                <div id="detailsForm">
+                    <!-- Dynamic content based on selected systems -->
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="prevStep(3)">Anterior</button>
+                    <button class="btn btn-primary" onclick="nextStep(3)">Continuar</button>
+                </div>
+            </div>
+
+            <!-- Step 4: Contact Info -->
+            <div class="step-content" id="step4">
+                <h2 class="step-title">Información de contacto</h2>
+                <p class="step-subtitle">Para enviarte tu cotización personalizada</p>
+                
+                <form id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Nombre completo *</label>
+                            <input type="text" class="form-input" id="fullName" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Teléfono *</label>
+                            <input type="tel" class="form-input" id="phone" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Email *</label>
+                        <input type="email" class="form-input" id="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Dirección de la propiedad</label>
+                        <input type="text" class="form-input" id="address" placeholder="Ciudad, Puerto Rico">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Presupuesto estimado</label>
+                        <select class="form-input" id="budget">
+                            <option value="">Selecciona un rango</option>
+                            <option value="under-1000">Menos de $1,000</option>
+                            <option value="1000-2500">$1,000 - $2,500</option>
+                            <option value="2500-5000">$2,500 - $5,000</option>
+                            <option value="5000-10000">$5,000 - $10,000</option>
+                            <option value="over-10000">Más de $10,000</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">¿Cuándo te gustaría instalar? *</label>
+                        <select class="form-input" id="timeframe" required>
+                            <option value="">Selecciona una opción</option>
+                            <option value="urgent">Lo antes posible (1-2 semanas)</option>
+                            <option value="soon">Pronto (2-4 semanas)</option>
+                            <option value="flexible">Soy flexible (1-2 meses)</option>
+                            <option value="planning">Solo cotizando</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Comentarios adicionales</label>
+                        <textarea class="form-input" id="comments" placeholder="Cuéntanos más sobre tus necesidades..."></textarea>
+                    </div>
+                </form>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="prevStep(4)">Anterior</button>
+                    <button class="btn btn-primary" onclick="nextStep(4)">Ver Resumen</button>
+                </div>
+            </div>
+
+            <!-- Step 5: Summary -->
+            <div class="step-content" id="step5">
+                <h2 class="step-title">Resumen de tu configuración</h2>
+                <p class="step-subtitle">Revisa los detalles antes de enviar</p>
+                
+                <div class="summary-card">
+                    <h3 class="summary-title">Tu Sistema de Seguridad</h3>
+                    <div id="summaryContent"></div>
+                    <div class="price-estimate">
+                        <div class="price-label">Estimado de inversión</div>
+                        <div class="price-value" id="priceEstimate">$0</div>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">*Precio aproximado sujeto a evaluación</p>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="prevStep(5)">Editar</button>
+                    <button class="btn btn-primary" onclick="submitConfiguration()">Enviar Cotización</button>
+                </div>
+            </div>
+
+            <!-- Success -->
+            <div class="step-content" id="stepSuccess">
+                <div class="success-message">
+                    <div class="success-icon">✅</div>
+                    <h2 class="success-title">¡Solicitud Enviada!</h2>
+                    <p class="success-text">Gracias por confiar en ACT Security PR. Nuestro equipo revisará tu configuración y te contactará en las próximas 24 horas con una cotización detallada.</p>
+                    <button class="btn btn-primary" onclick="location.reload()" style="margin-top: 2rem;">Hacer Otra Configuración</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ACT Security PR</h3>
+                    <p>Protección y tecnología para tu tranquilidad</p>
+                    <p>📍 Puerto Rico</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Servicios</h3>
+                    <a href="#">Cámaras de Seguridad</a>
+                    <a href="#">Sistemas de Alarma</a>
+                    <a href="#">Control de Acceso</a>
+                    <a href="#">Soporte Técnico 24/7</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <a href="tel:+1787">📞 (787) XXX-XXXX</a>
+                    <a href="mailto:info@actsecuritypr.com">✉️ info@actsecuritypr.com</a>
+                    <a href="#">🌐 actsecuritypr.com</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ACT Security PR. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Configuration State
+        const config = {
+            propertyType: null,
+            systems: [],
+            details: {},
+            contact: {},
+            currentStep: 1
+        };
+
+        // Start Configurator
+        function startConfigurator() {
+            document.getElementById('heroSection').style.display = 'none';
+            document.getElementById('progressContainer').classList.add('active');
+            updateProgress();
+        }
+
+        function goToHero() {
+            document.getElementById('heroSection').style.display = 'block';
+            document.getElementById('progressContainer').classList.remove('active');
+            document.querySelectorAll('.step-content').forEach(step => {
+                step.classList.remove('active');
+            });
+            document.getElementById('step1').classList.add('active');
+            config.currentStep = 1;
+        }
+
+        // Property Type Selection
+        function selectPropertyType(type) {
+            config.propertyType = type;
+            document.querySelectorAll('#step1 .selection-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            event.target.closest('.selection-card').classList.add('selected');
+            document.getElementById('nextStep1').disabled = false;
+        }
+
+        // System Selection
+        function toggleSystem(system) {
+            const card = event.target.closest('.checkbox-card');
+            const index = config.systems.indexOf(system);
+            
+            if (index > -1) {
+                config.systems.splice(index, 1);
+                card.classList.remove('selected');
+            } else {
+                config.systems.push(system);
+                card.classList.add('selected');
+            }
+            
+            document.getElementById('nextStep2').disabled = config.systems.length === 0;
+        }
+
+        // Generate Details Form
+        function generateDetailsForm() {
+            const detailsForm = document.getElementById('detailsForm');
+            detailsForm.innerHTML = '';
+            
+            if (config.systems.includes('cameras')) {
+                detailsForm.innerHTML += `
+                    <div class="form-group">
+                        <label class="form-label">📹 ¿Cuántas cámaras necesitas?</label>
+                        <select class="form-input" id="cameraCount">
+                            <option value="2-4">2-4 cámaras</option>
+                            <option value="5-8">5-8 cámaras</option>
+                            <option value="9-16">9-16 cámaras</option>
+                            <option value="17+">Más de 16 cámaras</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">¿Dónde las instalarás?</label>
+                        <input type="text" class="form-input" id="cameraLocations" placeholder="Ej: entrada principal, estacionamiento, patio...">
+                    </div>
+                `;
+            }
+            
+            if (config.systems.includes('alarms')) {
+                detailsForm.innerHTML += `
+                    <div class="form-group">
+                        <label class="form-label">🚨 ¿Cuántas zonas deseas proteger?</label>
+                        <select class="form-input" id="alarmZones">
+                            <option value="1-3">1-3 zonas</option>
+                            <option value="4-6">4-6 zonas</option>
+                            <option value="7-10">7-10 zonas</option>
+                            <option value="10+">Más de 10 zonas</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Tipo de sensores</label>
+                        <input type="text" class="form-input" id="sensorTypes" placeholder="Ej: puertas, ventanas, movimiento...">
+                    </div>
+                `;
+            }
+            
+            if (config.systems.includes('access')) {
+                detailsForm.innerHTML += `
+                    <div class="form-group">
+                        <label class="form-label">🔐 ¿Cuántos puntos de acceso?</label>
+                        <select class="form-input" id="accessPoints">
+                            <option value="1-2">1-2 puntos</option>
+                            <option value="3-5">3-5 puntos</option>
+                            <option value="6-10">6-10 puntos</option>
+                            <option value="10+">Más de 10 puntos</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Tipo de control preferido</label>
+                        <select class="form-input" id="accessType">
+                            <option value="keypad">Teclado numérico</option>
+                            <option value="card">Tarjetas/Llaveros</option>
+                            <option value="biometric">Biométrico (huella)</option>
+                            <option value="smart">Cerradura inteligente</option>
+                            <option value="combo">Combinación</option>
+                        </select>
+                    </div>
+                `;
+            }
+        }
+
+        // Navigation
+        function nextStep(current) {
+            // Save details from current step
+            if (current === 3) {
+                saveDetails();
+            }
+            if (current === 4) {
+                if (!validateContactForm()) return;
+                saveContactInfo();
+            }
+            
+            // Hide current step
+            document.getElementById(`step${current}`).classList.remove('active');
+            
+            // Show next step
+            const nextStepNum = current + 1;
+            
+            if (nextStepNum === 3) {
+                generateDetailsForm();
+            }
+            
+            if (nextStepNum === 5) {
+                generateSummary();
+            }
+            
+            document.getElementById(`step${nextStepNum}`).classList.add('active');
+            config.currentStep = nextStepNum;
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function prevStep(current) {
+            document.getElementById(`step${current}`).classList.remove('active');
+            const prevStepNum = current - 1;
+            document.getElementById(`step${prevStepNum}`).classList.add('active');
+            config.currentStep = prevStepNum;
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Update Progress Bar
+        function updateProgress() {
+            const steps = document.querySelectorAll('.progress-step');
+            const progressBar = document.getElementById('progressBar');
+            const progressWidth = ((config.currentStep - 1) / (steps.length - 1)) * 100;
+            progressBar.style.setProperty('--progress-width', `${progressWidth}%`);
+            
+            steps.forEach((step, index) => {
+                const stepNum = index + 1;
+                step.classList.remove('active', 'completed');
+                
+                if (stepNum < config.currentStep) {
+                    step.classList.add('completed');
+                } else if (stepNum === config.currentStep) {
+                    step.classList.add('active');
+                }
+            });
+        }
+
+        // Save Details
+        function saveDetails() {
+            if (config.systems.includes('cameras')) {
+                config.details.cameras = {
+                    count: document.getElementById('cameraCount')?.value || '',
+                    locations: document.getElementById('cameraLocations')?.value || ''
+                };
+            }
+            if (config.systems.includes('alarms')) {
+                config.details.alarms = {
+                    zones: document.getElementById('alarmZones')?.value || '',
+                    sensors: document.getElementById('sensorTypes')?.value || ''
+                };
+            }
+            if (config.systems.includes('access')) {
+                config.details.access = {
+                    points: document.getElementById('accessPoints')?.value || '',
+                    type: document.getElementById('accessType')?.value || ''
+                };
+            }
+        }
+
+        // Validate Contact Form
+        function validateContactForm() {
+            const name = document.getElementById('fullName').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const timeframe = document.getElementById('timeframe').value;
+            
+            if (!name || !phone || !email || !timeframe) {
+                alert('Por favor completa todos los campos requeridos (*)');
+                return false;
+            }
+            
+            return true;
+        }
+
+        // Save Contact Info
+        function saveContactInfo() {
+            config.contact = {
+                name: document.getElementById('fullName').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                address: document.getElementById('address').value,
+                budget: document.getElementById('budget').value,
+                timeframe: document.getElementById('timeframe').value,
+                comments: document.getElementById('comments').value
+            };
+        }
+
+        // Generate Summary
+        function generateSummary() {
+            const summaryContent = document.getElementById('summaryContent');
+            let html = '';
+            
+            // Property Type
+            const propertyLabels = {
+                'residence': 'Residencia',
+                'business': 'Negocio',
+                'building': 'Edificio'
+            };
+            html += `<div class="summary-item">
+                <span class="summary-label">Tipo de propiedad</span>
+                <span class="summary-value">${propertyLabels[config.propertyType]}</span>
+            </div>`;
+            
+            // Systems
+            const systemLabels = {
+                'cameras': 'Cámaras CCTV',
+                'alarms': 'Sistema de Alarmas',
+                'access': 'Control de Acceso'
+            };
+            html += `<div class="summary-item">
+                <span class="summary-label">Sistemas seleccionados</span>
+                <span class="summary-value">${config.systems.map(s => systemLabels[s]).join(', ')}</span>
+            </div>`;
+            
+            // Details
+            if (config.details.cameras) {
+                html += `<div class="summary-item">
+                    <span class="summary-label">Cámaras</span>
+                    <span class="summary-value">${config.details.cameras.count}</span>
+                </div>`;
+            }
+            if (config.details.alarms) {
+                html += `<div class="summary-item">
+                    <span class="summary-label">Zonas de alarma</span>
+                    <span class="summary-value">${config.details.alarms.zones}</span>
+                </div>`;
+            }
+            if (config.details.access) {
+                html += `<div class="summary-item">
+                    <span class="summary-label">Puntos de acceso</span>
+                    <span class="summary-value">${config.details.access.points}</span>
+                </div>`;
+            }
+            
+            summaryContent.innerHTML = html;
+            
+            // Calculate estimate
+            calculateEstimate();
+        }
+
+        // Calculate Price Estimate
+        function calculateEstimate() {
+            let basePrice = 0;
+            const propertyMultiplier = {
+                'residence': 1,
+                'business': 1.3,
+                'building': 1.6
+            };
+            
+            // Base prices per system
+            if (config.systems.includes('cameras')) {
+                const cameraCount = config.details.cameras?.count || '2-4';
+                const counts = {
+                    '2-4': 800,
+                    '5-8': 1500,
+                    '9-16': 2800,
+                    '17+': 4500
+                };
+                basePrice += counts[cameraCount] || 800;
+            }
+            
+            if (config.systems.includes('alarms')) {
+                const zones = config.details.alarms?.zones || '1-3';
+                const zonePrices = {
+                    '1-3': 600,
+                    '4-6': 1000,
+                    '7-10': 1600,
+                    '10+': 2400
+                };
+                basePrice += zonePrices[zones] || 600;
+            }
+            
+            if (config.systems.includes('access')) {
+                const points = config.details.access?.points || '1-2';
+                const pointPrices = {
+                    '1-2': 500,
+                    '3-5': 1200,
+                    '6-10': 2200,
+                    '10+': 3500
+                };
+                basePrice += pointPrices[points] || 500;
+            }
+            
+            // Apply property multiplier
+            const finalPrice = Math.round(basePrice * propertyMultiplier[config.propertyType]);
+            
+            document.getElementById('priceEstimate').textContent = `$${finalPrice.toLocaleString()}`;
+        }
+
+        // Submit Configuration
+        function submitConfiguration() {
+            // Here you would normally send data to your backend
+            console.log('Configuration submitted:', config);
+            
+            // Show success message
+            document.getElementById('step5').classList.remove('active');
+            document.getElementById('stepSuccess').classList.add('active');
+            
+            // In a real implementation, you would send this data via email or to a database
+            // For now, we'll just log it and show success
+            
+            // Example: Send to email service or save to database
+            // sendToBackend(config);
+        }
+
+        // Optional: Send data to backend
+        function sendToBackend(data) {
+            // Example implementation with fetch API
+            /*
+            fetch('https://your-backend.com/api/quotes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log('Success:', result);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+            */
+        }
+    </script>
+</body>
+</html>
